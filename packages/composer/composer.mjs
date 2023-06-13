@@ -7,10 +7,8 @@ import parseArgs from 'minimist'
 import isMain from 'es-main'
 import helpMe from 'help-me'
 import { join } from 'desm'
-import { start } from '@platformatic/service'
 
 import { fetchOpenApiSchemas } from './lib/fetch-schemas.mjs'
-import { platformaticComposer } from './index.js'
 
 const help = helpMe({
   dir: join(import.meta.url, 'help'),
@@ -20,13 +18,6 @@ const help = helpMe({
 
 const program = commist({ maxDistance: 2 })
 
-program.register('start', (argv) => {
-  /* c8 ignore next 4 */
-  start(platformaticComposer, argv).catch((err) => {
-    console.error(err)
-    process.exit(1)
-  })
-})
 program.register('openapi schemas fetch', fetchOpenApiSchemas)
 
 export async function runComposer (argv) {

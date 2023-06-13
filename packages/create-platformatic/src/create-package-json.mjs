@@ -7,10 +7,10 @@ const packageJsonTemplate = (addTSBuild = false) => (`\
 {
   "scripts": {
     ${addTSBuild
-? `"start": "npm run clean && platformatic {type} start",
+? `"start": "npm run clean && platformatic start",
     "clean": "rm -fr ./dist",
     "build": "npx tsc"`
-: '"start": "platformatic {type} start"'}
+: '"start": "platformatic start"'}
   },
   "devDependencies": {
     "fastify": "^{fastifyVersion}"

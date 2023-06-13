@@ -35,7 +35,7 @@ test('version', async (t) => {
 
 test('db', async (t) => {
   try {
-    await execa('node', [cliPath, 'db', 'start'])
+    await execa('node', [cliPath, 'start'])
     t.fail('bug')
   } catch (err) {
     t.ok(err.stderr.includes('Missing config file'))
@@ -44,7 +44,7 @@ test('db', async (t) => {
 
 test('runtime', async (t) => {
   try {
-    await execa('node', [cliPath, 'runtime', 'start'])
+    await execa('node', [cliPath, 'start'])
     t.fail('bug')
   } catch (err) {
     t.ok(err.stderr.includes('Missing config file'))
@@ -81,7 +81,7 @@ test('subcommand not found', async (t) => {
 
 test('allows for minor typos in commands', async (t) => {
   try {
-    await execa('node', [cliPath, 'dbx', 'start'])
+    await execa('node', [cliPath, 'strat'])
     t.fail('bug')
   } catch (err) {
     t.ok(err.stderr.includes('Missing config file'))
@@ -158,7 +158,7 @@ async function start (...args) {
 
 test('start the database and do a call', async ({ teardown, equal, match }) => {
   const config = join(import.meta.url, '..', 'fixtures/sqlite/platformatic.db.json')
-  const { child, url } = await start('db', 'start', '-c', config)
+  const { child, url } = await start('start', '-c', config)
   teardown(() => {
     child.kill('SIGINT')
   })

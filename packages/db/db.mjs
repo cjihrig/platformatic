@@ -6,7 +6,7 @@ import isMain from 'es-main'
 import helpMe from 'help-me'
 import { readFile } from 'fs/promises'
 import { join } from 'desm'
-import { start, tsCompiler } from '@platformatic/service'
+import { tsCompiler } from '@platformatic/service'
 import { platformaticDB } from './index.js'
 
 import { applyMigrations } from './lib/migrate.mjs'
@@ -26,19 +26,10 @@ const help = helpMe({
 const program = commist({ maxDistance: 2 })
 
 program.register('help', help.toStdout)
-program.register('help start', help.toStdout.bind(null, ['start']))
 program.register('help compile', help.toStdout.bind(null, ['compile']))
 program.register('help migrations apply', help.toStdout.bind(null, ['migrations apply']))
 program.register({ command: 'help seed', strict: true }, help.toStdout.bind(null, ['seed']))
 program.register('help schema', help.toStdout.bind(null, ['schema']))
-
-program.register('start', (argv) => {
-  start(platformaticDB, argv).catch((err) => {
-    /* c8 ignore next 2 */
-    console.error(err)
-    process.exit(1)
-  })
-})
 program.register('compile', compile)
 program.register('migrations create', generateMigration)
 program.register('migrations apply', applyMigrations)
